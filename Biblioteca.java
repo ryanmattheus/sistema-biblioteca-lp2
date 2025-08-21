@@ -1,11 +1,12 @@
 public class Biblioteca {
     public static void main(String[] args) {
-        System.out.println("Bem-vindo a Biblioteca Virtual!");
+        livro livro1 = new livro("af que bosta", "ryan butera", 2008);
+        livro livro2 = new livro("Como destruir sua vida", "Carolline", 2025);
+        livro2.setAno(2027);
 
-        public class livro{
-            public livro(){
-
-            }
-        }
+        System.out.println(livro2.toString());
     }
+
+
+
 }
