@@ -6,12 +6,12 @@ public class Biblioteca {
     private List<Livro> acervo;
     private List<Usuario> usuariosCadastrados;
 
-    public Biblioteca(){
+    public Biblioteca() {
         this.acervo = new ArrayList<>();
         this.usuariosCadastrados = new ArrayList<>();
     }
 
-    public void cadastrarLivro(Livro livro){
+    public void cadastrarLivro(Livro livro) {
         this.acervo.add(livro);
         System.out.println("O livro " + livro.getTitulo() + " foi cadastrado com sucesso!");
     }
@@ -22,8 +22,8 @@ public class Biblioteca {
     }
 
     public Livro pesquisarLivroPorTitulo(String titulo) {
-        for(Livro livro : this.acervo){
-            if(livro.getTitulo().equalsIgnoreCase(titulo)){
+        for (Livro livro : this.acervo) {
+            if (livro.getTitulo().equalsIgnoreCase(titulo)) {
                 return livro;
             }
         }
@@ -40,17 +40,18 @@ public class Biblioteca {
 
     public static void main(String[] args) {
 
-        Livro livroteste = new Livro("minha vida em marte", "paulo gustavo", 2019);
-        Usuario usuario = new Usuario("Ryan", "ryan@gmail.com","ryan");
+        Livro livroteste = new Livro("teste", "ryan", 2019);
+        Usuario usuario = new Usuario("Ryan", "ryan@gmail.com", "ryan");
+
         Biblioteca minhaBiblioteca = new Biblioteca();
+        minhaBiblioteca.cadastrarLivro(livroteste);
+        minhaBiblioteca.cadastrarLivro(livroteste);
+        minhaBiblioteca.cadastrarLivro(livroteste);
+        minhaBiblioteca.cadastrarLivro(livroteste);
         minhaBiblioteca.cadastrarLivro(livroteste);
         minhaBiblioteca.cadastrarUsuario(usuario);
 
+        System.out.println(minhaBiblioteca);
 
     }
-
-
-
-
-
 }
