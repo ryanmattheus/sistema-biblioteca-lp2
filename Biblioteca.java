@@ -1,57 +1,63 @@
+
+import org.w3c.dom.ls.LSOutput;
+
 import java.util.ArrayList;
 import java.util.List;
 
 public class Biblioteca {
 
     private List<Livro> acervo;
-    private List<Usuario> usuariosCadastrados;
+    private List<Usuario> listaDeUsuarios;
 
     public Biblioteca() {
         this.acervo = new ArrayList<>();
-        this.usuariosCadastrados = new ArrayList<>();
-    }
-
-    public void cadastrarLivro(Livro livro) {
-        this.acervo.add(livro);
-        System.out.println("O livro " + livro.getTitulo() + " foi cadastrado com sucesso!");
-    }
-
-    public void cadastrarUsuario(Usuario usuario) {
-        this.usuariosCadastrados.add(usuario);
-        System.out.println("O usuário " + usuario.getNome() + " foi cadastrado com sucesso!");
+        this.listaDeUsuarios = new ArrayList<>();
     }
 
     public Livro pesquisarLivroPorTitulo(String titulo) {
-        for (Livro livro : this.acervo) {
-            if (livro.getTitulo().equalsIgnoreCase(titulo)) {
+        for(Livro livro : this.acervo) {
+            if(livro.getTitulo().equalsIgnoreCase(titulo)) {
                 return livro;
             }
         }
         return null;
-
     }
 
-    @Override
-    public String toString() {
-        return "Biblioteca{" +
-                "acervo=" + acervo +
-                '}';
+    public List<Livro> pesquisarLivroPorTermo(String termo) {
+        List<Livro> listaDeLivros = new ArrayList<>();
+        for(Livro livro : acervo) {  //vai percorrer todos os livros
+            if(livro.getTitulo().toLowerCase().contains(termo.toLowerCase())) {
+                listaDeLivros.add(livro);
+            }
+        }
+        return listaDeLivros;
     }
+
+    public void listarAcervo(){}
+
+    public void cadastrarLivro(Livro livro) {
+        this.acervo.add(livro);
+        System.out.println("O livro " + livro.getTitulo() + " foi cadastrado.");
+    }
+
+    public void cadastrarUsuario(Usuario usuario) {
+        this.listaDeUsuarios.add(usuario);
+        System.out.println("O usuário " + usuario.getNome() + " foi cadastrado.");
+    }
+
 
     public static void main(String[] args) {
-
-        Livro livroteste = new Livro("teste", "ryan", 2019);
-        Usuario usuario = new Usuario("Ryan", "ryan@gmail.com", "ryan");
-
+        Livro livroJava = new Livro("Java Como Programar", "Deitel", 2014);
+        Usuario meuUsuario = new Usuario("Ryan", "123", "1234");
         Biblioteca minhaBiblioteca = new Biblioteca();
-        minhaBiblioteca.cadastrarLivro(livroteste);
-        minhaBiblioteca.cadastrarLivro(livroteste);
-        minhaBiblioteca.cadastrarLivro(livroteste);
-        minhaBiblioteca.cadastrarLivro(livroteste);
-        minhaBiblioteca.cadastrarLivro(livroteste);
-        minhaBiblioteca.cadastrarUsuario(usuario);
-
-        System.out.println(minhaBiblioteca);
-
+        minhaBiblioteca.cadastrarLivro(livroJava);
+        minhaBiblioteca.cadastrarUsuario(meuUsuario);
+        Livro livroEncontrado = minhaBiblioteca.pesquisarLivroPorTitulo("java como programar");
+        System.out.println(livroEncontrado);
+        List <Livro> resultado = minhaBiblioteca.pesquisarLivroPorTermo("java como programar");
+        for(var livro : resultado) {
+            System.out.println("Livros Encontrados: ");
+            System.out.println(livro);
+        }
     }
 }
