@@ -1,23 +1,28 @@
-import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
 public class Biblioteca {
 
-    private livro[] acervo; //acervo é um vetor
-    private List<usuario> usuariosCadastrados;
-
-    private int acervo;
+    private List<Livro> acervo;
+    private List<Usuario> usuariosCadastrados;
 
     public Biblioteca(){
-        this.acervo = new ArrayList<>;
-        this.acervo = 0;
-        this.usuariosCadastrados = new ArrayList();
+        this.acervo = new ArrayList<>();
+        this.usuariosCadastrados = new ArrayList<>();
     }
 
+    public void cadastrarLivro(Livro livro){
+        this.acervo.add(livro);
+        System.out.println("O livro " + livro.getTitulo() + " foi cadastrado com sucesso!");
+    }
 
-    public livro pesquisarLivroPorTitulo(String titulo) {
-        for(livro livro : this.acervo){
+    public void cadastrarUsuario(Usuario usuario) {
+        this.usuariosCadastrados.add(usuario);
+        System.out.println("O usuário " + usuario.getNome() + " foi cadastrado com sucesso!");
+    }
+
+    public Livro pesquisarLivroPorTitulo(String titulo) {
+        for(Livro livro : this.acervo){
             if(livro.getTitulo().equalsIgnoreCase(titulo)){
                 return livro;
             }
@@ -26,26 +31,13 @@ public class Biblioteca {
 
     }
 
-
-    public usuario(){
-        this.acervo = new ArrayList<>();
-    }
-
-    public void cadastrarUsuario(usuario usuario) {
-        this.usuariosCadastrados.add(usuario);
-        System.out.println("O usuário " + usuario.getNome() + " foi cadastrado com sucesso!");
-    }
-
-
-
-
-
-
-
     public static void main(String[] args) {
 
-        usuario meuUser = new usuario("Ryan", "teste", 12345);
-        usuario user1 = new usuario("ryann", "ryan@gmail.com", 123456);
+        Livro livroteste = new Livro("minha vida em marte", "paulo gustavo", 2019);
+        Usuario usuario = new Usuario("Ryan", "ryan@gmail.com","ryan");
+        Biblioteca minhaBiblioteca = new Biblioteca();
+        minhaBiblioteca.cadastrarLivro(livroteste);
+        minhaBiblioteca.cadastrarUsuario(usuario);
 
 
     }
