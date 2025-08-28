@@ -31,6 +31,13 @@ public class Biblioteca {
 
     }
 
+    @Override
+    public String toString() {
+        return "Biblioteca{" +
+                "acervo=" + acervo +
+                '}';
+    }
+
     public static void main(String[] args) {
 
         Livro livroteste = new Livro("minha vida em marte", "paulo gustavo", 2019);
