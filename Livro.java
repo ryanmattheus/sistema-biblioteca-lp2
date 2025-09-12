@@ -23,4 +23,14 @@ public class Livro extends ItemDoAcervo {
     public String toString() {
         return "Livro '" + getTitulo() + "', de " + autor + " (" + getAno() + ") - Status: " + getStatus();
     }
+
+    @Override
+    public int getPrazo(){
+        return 10;
+    }
+
+    @Override
+    public double getValorMultaPorDiaAtraso() {
+        return 0.75;
+    }
 }

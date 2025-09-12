@@ -43,4 +43,11 @@ public class ItemDoAcervo {
         this.status = status;
     }
 
+    public int getPrazo(){
+        return 7;
+    }
+
+    public double getValorMultaPorDiaAtraso(){
+        return 0.50;
+    }
 }
