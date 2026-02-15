@@ -4,7 +4,6 @@ import java.time.temporal.ChronoUnit;
 import java.util.ArrayList;
 import java.util.List;
 
-
 public class Biblioteca {
 
     private List<ItemDoAcervo> acervo;
@@ -20,17 +19,17 @@ public class Biblioteca {
     public void realizarEmprestimo(String idUsuario, String titulo) {
         // 1 - Buscar os objetos usuario e livro
         Usuario usuarioDoEmprestimo = pesquisarUsuarioPorNome(idUsuario);
-        if(usuarioDoEmprestimo == null) {
+        if (usuarioDoEmprestimo == null) {
             System.out.println("Erro: usuário não cadastrado.");
             return;
         }
         ItemDoAcervo ItemDoEmprestimo = pesquisarItemPorTitulo(titulo);
-        if(ItemDoEmprestimo == null) {
+        if (ItemDoEmprestimo == null) {
             System.out.println("Erro: livro não cadastrado.");
             return;
         }
         // 2 - Validar a regra de negocio (verificar se o livro está disponível)
-        if(ItemDoEmprestimo.getStatus() == StatusItem.EMPRESTADO) {
+        if (ItemDoEmprestimo.getStatus() == StatusItem.EMPRESTADO) {
             System.out.println("Erro: livro já emprestrado.");
             return;
         }
@@ -44,24 +43,25 @@ public class Biblioteca {
             }
         }
 
-
-        // 3 - Realizar o registro (Criar objeto do tipo Emprestimo e adiciona-lo ao registroDeEmprestimos)
+        // 3 - Realizar o registro (Criar objeto do tipo Emprestimo e adiciona-lo ao
+        // registroDeEmprestimos)
         ItemDoEmprestimo.setStatus(StatusItem.EMPRESTADO);
         LocalDate dataEmprestimo = LocalDate.now();
         LocalDate dataDevolucaoPrevista = dataEmprestimo.plusDays(ItemDoEmprestimo.getPrazo());
-        Emprestimo emprestimo = new Emprestimo(ItemDoEmprestimo, usuarioDoEmprestimo, dataEmprestimo, dataDevolucaoPrevista);
+        Emprestimo emprestimo = new Emprestimo(ItemDoEmprestimo, usuarioDoEmprestimo, dataEmprestimo,
+                dataDevolucaoPrevista);
         registrosDeEmprestimos.add(emprestimo);
         System.out.println("Emprestimo realizado com sucesso!");
-        System.out.println("O livro '"+ItemDoEmprestimo.getTitulo()
-                +"' foi emprestado para o usuário " + usuarioDoEmprestimo.getNome()
-                +" na data " + emprestimo.getDataEmprestimo()
-                +" e tem de ser devolvido em " + emprestimo.getDataDevolucaoPrevista());
+        System.out.println("O livro '" + ItemDoEmprestimo.getTitulo()
+                + "' foi emprestado para o usuário " + usuarioDoEmprestimo.getNome()
+                + " na data " + emprestimo.getDataEmprestimo()
+                + " e tem de ser devolvido em " + emprestimo.getDataDevolucaoPrevista());
     }
 
     public Emprestimo buscarEmprestimoAtivoPorItem(ItemDoAcervo item) {
         for (Emprestimo emprestimo : registrosDeEmprestimos) {
-            if(emprestimo.getItem().getTitulo().equalsIgnoreCase(item.getTitulo())) {
-                if(emprestimo.getDataDevolucaoReal() == null) {
+            if (emprestimo.getItem().getTitulo().equalsIgnoreCase(item.getTitulo())) {
+                if (emprestimo.getDataDevolucaoReal() == null) {
                     return emprestimo;
                 }
             }
@@ -71,19 +71,19 @@ public class Biblioteca {
 
     public void realizarDevolucao(String titulo) {
         ItemDoAcervo item = pesquisarItemPorTitulo(titulo);
-        if(item == null) {
+        if (item == null) {
             System.out.println("Erro: esse livro não está cadastrado.");
             return;
         }
         Emprestimo emprestimo = buscarEmprestimoAtivoPorItem(item);
-        if(emprestimo == null) {
+        if (emprestimo == null) {
             System.out.println("Erro: esse emprestimo não existe.");
             return;
         }
         LocalDate hoje = LocalDate.now();
         long dias = ChronoUnit.DAYS.between(emprestimo.getDataDevolucaoPrevista(), hoje);
 
-        if(dias > 0) {
+        if (dias > 0) {
             double multa = dias * item.getMulta_Por_dia();
             System.out.println("Livro devolvido. Você precisa pagar uma multa de R$" + multa);
         } else {
@@ -94,8 +94,8 @@ public class Biblioteca {
     }
 
     public ItemDoAcervo pesquisarItemPorTitulo(String titulo) {
-        for(ItemDoAcervo item : this.acervo) {
-            if(item.getTitulo().equalsIgnoreCase(titulo)) {
+        for (ItemDoAcervo item : this.acervo) {
+            if (item.getTitulo().equalsIgnoreCase(titulo)) {
                 return item;
             }
         }
@@ -103,8 +103,8 @@ public class Biblioteca {
     }
 
     public Usuario pesquisarUsuarioPorNome(String Nome) {
-        for(Usuario usuario : this.listaDeUsuarios) {
-            if(usuario.getNome().equals(Nome)) {
+        for (Usuario usuario : this.listaDeUsuarios) {
+            if (usuario.getNome().equals(Nome)) {
                 return usuario;
             }
         }
@@ -134,6 +134,7 @@ public class Biblioteca {
         System.out.println(objeto.formatarParaEtiqueta());
         System.out.println("-----------------------------");
     }
+
     public void cadastrarItem(ItemDoAcervo item) {
 
         if (item instanceof Validavel) {
@@ -149,35 +150,36 @@ public class Biblioteca {
         System.out.println("O item " + item.getTitulo() + " foi cadastrado.");
     }
 
-
     public static void main(String[] args) {
-        System.out.println("TESTE FUNCIONANDO");
 
-//        Biblioteca minhaBiblioteca = new Biblioteca();
-//        Usuario meuUsuario = new Usuario("Ryan", "123");
-//        Livro livroJavaComoProgramar = new Livro("Java Como Programar", "Deitel", 2014);
-//        Livro livroMemoria = new Livro("Memórias Póstumas de Brás Cubas", "Machado de Assis", 1881);
-//
-//        minhaBiblioteca.cadastrarLivro(livroJavaComoProgramar);
-//        minhaBiblioteca.cadastrarLivro(livroMemoria);
-//        minhaBiblioteca.cadastrarUsuario(meuUsuario);
-//        minhaBiblioteca.listarAcervo();
-//        minhaBiblioteca.realizarEmprestimo("123", "Java Como Programar");
-//        minhaBiblioteca.listarAcervo();
-//        minhaBiblioteca.registrosDeEmprestimos.get(0).setDataDevolucaoPrevista(LocalDate.of(2025, 8, 31));
-//        minhaBiblioteca.realizarDevolucao("Java Como Programar");
-//        minhaBiblioteca.listarAcervo();
-//        Revista revistaVeja = new Revista("oiie", 2025, 1234);
-//        System.out.println(revistaVeja);
-//        minhaBiblioteca.realizarEmprestimo("123", "oiie");
-//
+        // Biblioteca minhaBiblioteca = new Biblioteca();
+        // Usuario meuUsuario = new Usuario("Ryan", "123");
+        // Livro livroJavaComoProgramar = new Livro("Java Como Programar", "Deitel",
+        // 2014);
+        // Livro livroMemoria = new Livro("Memórias Póstumas de Brás Cubas", "Machado de
+        // Assis", 1881);
+        //
+        // minhaBiblioteca.cadastrarLivro(livroJavaComoProgramar);
+        // minhaBiblioteca.cadastrarLivro(livroMemoria);
+        // minhaBiblioteca.cadastrarUsuario(meuUsuario);
+        // minhaBiblioteca.listarAcervo();
+        // minhaBiblioteca.realizarEmprestimo("123", "Java Como Programar");
+        // minhaBiblioteca.listarAcervo();
+        // minhaBiblioteca.registrosDeEmprestimos.get(0).setDataDevolucaoPrevista(LocalDate.of(2025,
+        // 8, 31));
+        // minhaBiblioteca.realizarDevolucao("Java Como Programar");
+        // minhaBiblioteca.listarAcervo();
+        // Revista revistaVeja = new Revista("oiie", 2025, 1234);
+        // System.out.println(revistaVeja);
+        // minhaBiblioteca.realizarEmprestimo("123", "oiie");
+        //
         Biblioteca biblioteca = new Biblioteca();
 
         Livro livro1 = new Livro("Programação em Java", "Deitel", 2022, "1234567890123");
         DVD dvd1 = new DVD("Curso Java Completo", 2021, 120);
 
-        Aluno aluno1 = new Aluno("Carlos Silva", "2023123", "123");
-        Professor professor1 = new Professor("Ana Souza", "P001", "123");
+        Aluno aluno1 = new Aluno("Ryan Matheus", "2023123", "123");
+        Professor professor1 = new Professor("Thiago", "P001", "123");
 
         biblioteca.cadastrarItem(livro1);
         biblioteca.cadastrarItem(dvd1);
@@ -190,11 +192,10 @@ public class Biblioteca {
 
         livro1.reservar();
 
-        biblioteca.realizarEmprestimo("Carlos Silva", "Programação em Java");
+        biblioteca.realizarEmprestimo("Ryan Matheus", "Programação em Java");
 
         livro1.cancelarReserva();
-
-        biblioteca.realizarEmprestimo("Carlos Silva", "Programação em Java");
+        biblioteca.realizarEmprestimo("Ryan Matheus", "Programação em Java");
         System.out.println(biblioteca);
     }
 }
