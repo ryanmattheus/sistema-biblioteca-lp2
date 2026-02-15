@@ -178,7 +178,7 @@ public class Biblioteca {
         Livro livro1 = new Livro("Programação em Java", "Deitel", 2022, "1234567890123");
         DVD dvd1 = new DVD("Curso Java Completo", 2021, 120);
 
-        Aluno aluno1 = new Aluno("Ryan Matheus", "2023123", "123");
+        Aluno aluno1 = new Aluno("Ryan", "2023123", "123");
         Professor professor1 = new Professor("Thiago", "P001", "123");
 
         biblioteca.cadastrarItem(livro1);
@@ -192,10 +192,10 @@ public class Biblioteca {
 
         livro1.reservar();
 
-        biblioteca.realizarEmprestimo("Ryan Matheus", "Programação em Java");
+        biblioteca.realizarEmprestimo("Ryan", "Programação em Java");
 
         livro1.cancelarReserva();
-        biblioteca.realizarEmprestimo("Ryan Matheus", "Programação em Java");
+        biblioteca.realizarEmprestimo("Ryan", "Programação em Java");
         System.out.println(biblioteca);
     }
 }
