@@ -1,14 +1,11 @@
-public class ItemDoAcervo {
+import java.time.LocalDate;
+import java.time.temporal.ChronoUnit;
 
-    protected String titulo;
-    protected int ano;
-    protected StatusItem status;
+public abstract class ItemDoAcervo implements Imprimivel {
 
-    public ItemDoAcervo(String titulo, int ano) {
-        setTitulo(titulo);
-        setAno(ano);
-        this.status = StatusItem.DISPONIVEL;
-    }
+    public String titulo;
+    public int ano;
+    public StatusItem status;
 
     public int getAno() {
         return ano;
@@ -28,7 +25,7 @@ public class ItemDoAcervo {
     }
 
     public void setTitulo(String titulo) {
-        if (titulo == "") {
+        if (titulo == null || titulo.isEmpty()) {
             System.out.println("Erro: título inválido.");
         } else {
             this.titulo = titulo;
@@ -41,6 +38,18 @@ public class ItemDoAcervo {
 
     public void setStatus(StatusItem status) {
         this.status = status;
+    }
+
+    public ItemDoAcervo (String titulo, int ano){
+        setTitulo(titulo);
+        setAno(ano);
+        setStatus(StatusItem.DISPONIVEL);
+    }
+    public int getPrazo(){
+        return 7;
+    }
+    public double getMulta_Por_dia(){
+        return 0.50;
     }
 
 }
